@@ -27,11 +27,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -257,7 +257,7 @@
         </div>
     </div>
 </div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">module.exports = class {
   constructor(client) {
     this.client = client;
@@ -286,7 +286,7 @@
 <p>Next, we&#x27;ll start an if statement for if there is already an embed in the starboard channel for this message, and we also define our final 4 variables. <code v-pre>star</code> is a simple regex to check how many stars the embed already has, <code v-pre>foundStar</code> allows us to use the color of the pre-existing embed, <code v-pre>image</code> checks if there is anything attached to the message, and <code v-pre>embed</code> is our new embed!</p>
 <p>We also use a function that hasn&#x27;t been talked about yet, and that is <code v-pre>this.extension</code>. It checks the message to see if it has any images. You&#x27;ll see that later, as it&#x27;s not <em>too</em> important.</p>
 <p>I told you it wasn&#x27;t that complicated. Let&#x27;s keep going.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Here we fetch 100 messages from the starboard channel.
 const fetch = await starChannel.messages.fetch({ limit: 100 }); 
 // We check the messages within the fetch object to see if the message that was reacted to is already a message in the starboard,
@@ -331,7 +331,7 @@ if (stars) {
 </div>
 <p>Now, if you were to just use the code above, your starboard would only function if there was already a message in the starboard channel. Let&#x27;s take care of that.</p>
 <p>Here we add an if statement that mimics and is placed after the previous block, but this time manually setting the color of the embed, and also manually setting the amount of stars the embed will have.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Now we use an if statement for if a message isn't found in the starboard for the message.
 if (!stars) {
   // We use the this.extension function to see if there is anything attached to the message.
@@ -354,7 +354,7 @@ if (!stars) {
 }</code></pre>
 </doc-codeblock></div>
 <p>Now, if you&#x27;ve been following along exactly, you have a working starboard! But if you like a TL;DR, here ya go.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">module.exports = class {
   constructor(client) {
     this.client = client;
@@ -411,7 +411,7 @@ if (!stars) {
 <p>So, all that code up there is only for if a reaction is added. Now, we&#x27;ll handle if a reaction is removed.</p>
 <p>Here, we very closely mimic the messageReactionAdd event, only this time we&#x27;ll <strong>subtract</strong> 1 from the total amount of stars that are on the embed.&#x27;</p>
 <p>There&#x27;s only a slight difference between the <code v-pre>messageReactionAdd</code> and the <code v-pre>messageReactionRemove</code> event, and that is the <code v-pre>messageReactionAdd</code> event fires when a reaction is added, and the <code v-pre>messageReactionRemove</code> event fires when a reaction is removed.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Here we need to check if the user who removed the reaction is not the message author, as the star would then only remove one star as we did return when he added it
 if (message.author.id === user.id) return;
 if (stars) {
@@ -432,7 +432,7 @@ if (stars) {
 }</code></pre>
 </doc-codeblock></div>
 <p>Here&#x27;s the finalized code block for the <code v-pre>messageReactionRemove</code> event.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">module.exports = class {
   constructor(client) {
     this.client = client;

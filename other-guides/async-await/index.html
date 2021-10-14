@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -212,7 +212,7 @@
 <p><strong>You get a bottle of water, you open it, turn over and drain it. Then dispose it.</strong></p>
 <p>The problem above is, when you get the bottle of water, you can immediately open it (sync function), but when you turn it over and drain it, you have to <strong>await</strong> until the bottle gets empty. This is, an <strong>AsyncFunction</strong>.</p>
 <p><strong>AoDude#8676</strong> proposed the following example:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const perrier = require(&quot;PerrierBrandWater&quot;);
 const bottle = new perrier.BottleOfWater();
 
@@ -232,7 +232,7 @@ const runForYourLives = () =&gt; process.exit();</code></pre>
 <p>Inside <code v-pre>then</code> and <code v-pre>catch</code> there are functions, inside then, we use the variable <strong>emptyBottle</strong>, in which is the value that the function <strong>turnOverAndDrain</strong> returns when it resolves. And inside catch, <strong>err</strong> is the error object that the function returns when it fails.</p>
 <p>Don&#x27;t get it? There&#x27;s an example with Discord.JS:</p>
 <p>Some practise, the method <a href="https://discord.js.org/#/docs/main/stable/class/UserManager?scrollTo=fetch">client.users.fetch</a> returns <code v-pre>Promise&lt;User&gt;</code>. It means, when you call that method, it&#x27;ll return a <strong>Promise</strong>, resolving with a <strong>User</strong> object (but it can also throw an error).</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.users.fetch(id)
     .then((User) =&gt; {
         // Do something with the User object
@@ -249,7 +249,7 @@ const runForYourLives = () =&gt; process.exit();</code></pre>
     </h3>
 </doc-anchor-target>
 <p>Once we know how to use the <code v-pre>Object Promise</code> and we know how to work with it, it&#x27;s now time to learn how to use ES8 Promises, with <code v-pre>async</code>/<code v-pre>await</code>.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">async () =&gt; {
     const User = await client.users.fetch(id);
     // Do something with the User object
@@ -257,7 +257,7 @@ const runForYourLives = () =&gt; process.exit();</code></pre>
 </doc-codeblock></div>
 <p><strong>WAIT WHAT? THAT&#x27;S ALL?</strong> Yes, it is. in the code above, you&#x27;re defining the constant <code v-pre>User</code> as the result of the Promise, hence the keyword <code v-pre>await</code>. In this context, your code (when it executes), calls the method <code v-pre>client.users.fetch()</code>, but it&#x27;ll stop there, once the promise resolves, the returned value (User Object) is assigned to the constant User.</p>
 <p><strong>Wait, we have the replacement for</strong> <code v-pre>then</code><strong>, but what if the method fails?</strong> An advantage of ES8 Async/Await is that, you can call multiple AsyncFunctions, and catch them all once. As in the following example:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">async () =&gt; {
     try {
         const User = await client.users.fetch(id);
@@ -280,20 +280,20 @@ const runForYourLives = () =&gt; process.exit();</code></pre>
     </h2>
 </doc-anchor-target>
 <p>To use the <code v-pre>await</code> keyword, you <strong>MUST</strong> have written the <code v-pre>async</code> keyword in the function whose block contains the code. For example:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const EditMessage = async (id, content) =&gt; {
     const Message = await channel.messages.fetch(id); // Async
     return Message.edit(content);
 }</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">async function EditMessage(id, content) {
     const Message = await channel.messages.fetch(id); // Async
     return Message.edit(content);
 }</code></pre>
 </doc-codeblock></div>
 <p>However, if you have a function inside another, for example:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const EditMessage = async (id, content) =&gt; {
     const Message = await channel.messages.fetch(id);
     setTimeout(() =&gt; {
@@ -303,7 +303,7 @@ const runForYourLives = () =&gt; process.exit();</code></pre>
 }</code></pre>
 </doc-codeblock></div>
 <p>That will throw an error:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">        await Message.edit(content);
               ^^^^^^^
 SyntaxError: Unexpected identifier</code></pre>

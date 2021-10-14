@@ -27,11 +27,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -223,11 +223,11 @@
 </doc-anchor-target>
 <p>There are two places where you can grab emojis using discord.js: in the client, and in the guilds. <code v-pre>client.emojis.cache</code> is a collection of every emoji the client has access to, and <code v-pre>guild.emojis.cache</code> is a collection of the emojis of a specific guild.</p>
 <p>If you&#x27;ve learned anything from <a href="../../understanding/collections/">Understanding Collections</a>, you might already know how to get something by ID from a collection:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const ayy = client.emojis.cache.get(&quot;305818615712579584&quot;);</code></pre>
 </doc-codeblock></div>
 <p>You might also know how to use <code v-pre>find</code> to get something with another property - so here, I can get <code v-pre>ayy</code> through its name:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const ayy = client.emojis.cache.find(emoji =&gt; emoji.name === &quot;ayy&quot;);</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="outputting-emoji-in-chat">
@@ -238,21 +238,21 @@
 </doc-anchor-target>
 <p>But how does one output that emoji to the chat? Well, just like users and roles, emojis have a special <code v-pre>.toString()</code> method that converts them to the appropriate format. So, <code v-pre>ayy.toString()</code> will actually output the <code v-pre>&lt;:ayy:305818615712579584&gt;</code> we saw above, which the client turns into a proper emoji.</p>
 <p>You can also take advantage of concatenation and template literals to simplify the task, since they will automatically do the conversion for you:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (message.content === &quot;ayy&quot;) {
    const ayy = client.emojis.cache.find(emoji =&gt; emoji.name === &quot;ayy&quot;);
    message.reply(`${ayy} LMAO`);
 }</code></pre>
 </doc-codeblock></div>
 <p>If you wanted to list all the emojis in a guild, a simple map operation on the collection should give you proper results:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (message.content === &quot;listemojis&quot;) {
   const emojiList = message.guild.emojis.cache.map(emoji =&gt; emoji.toString()).join(&quot; &quot;);
   message.channel.send(emojiList);
 }</code></pre>
 </doc-codeblock></div>
 <p>In this example, you can list all custom emojis with (emoji.id, emoji.image and emoji.name).</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (message.content === &quot;listemojis&quot;) {
    const emojiList = message.guild.emojis.cache.map((e, x) =&gt; `${x} = ${e} | ${e.name}`).join(&quot;\n&quot;);
    message.channel.send(emojiList);

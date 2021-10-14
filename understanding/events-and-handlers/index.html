@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -218,7 +218,7 @@
 </doc-anchor-target>
 <p>Ah, asynchronous coding. So awesome. So hard to grasp when you first encounter it. The reality of discord.js and many, many other libraries you will encounter, is that code is not executed one line at a time, one after the other.</p>
 <p>It should have been made obvious with the user of <code v-pre>client.on(&quot;message&quot;)</code> which triggers for each message. To explain how the <code v-pre>ready</code> event is important, let&#x27;s look at the following code:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
@@ -231,7 +231,7 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 <p>This code will not work, because <code v-pre>client</code> is not immediately available after it&#x27;s been initialized. <code v-pre>client.user</code> will be undefined in this case, even if we flipped the setActivity and login lines. This is because it takes a small amount of time for discord.js to load its servers, users, channels, and all that jazz. The more servers the bot is on, the longer it takes.</p>
 <p>To ensure that <code v-pre>client</code> and all its &quot;stuff&quot; is ready, we can use the <code v-pre>ready</code> event. Any code that you want to run on bootup that requires access to the <code v-pre>client</code> object, will need to be in this event.</p>
 <p>Here&#x27;s a simple example of using the <code v-pre>ready</code> event handler:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;ready&quot;, () =&gt; {
   client.user.setActivity(`on ${client.guilds.cache.size} servers`);
   console.log(`Ready to serve on ${client.guilds.cache.size} servers, for ${client.users.cache.size} users.`);
@@ -244,7 +244,7 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
     </h2>
 </doc-anchor-target>
 <p>Another useful event once you&#x27;ve enabled the privileged intent and added <code v-pre>GUILD_MEMBERS</code> to your intents array that is, is <a href="https://discord.js.org/#/docs/main/master/class/Client?scrollTo=e-guildMemberAdd"><code v-pre>guildMemberAdd</code></a>. Which triggers whenever someone joins any of the servers the bot is on. You&#x27;ll see this on smaller servers: a bot welcomes every new member in the #welcome channel. The following code does this.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;guildMemberAdd&quot;, (member) =&gt; {
   console.log(`New User &quot;${member.user.username}&quot; has joined &quot;${member.guild.name}&quot;` );
   member.guild.channels.cache.find(c =&gt; c.name === &quot;welcome&quot;).send(`&quot;${member.user.username}&quot; has joined this server`);
@@ -275,7 +275,7 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
         </div>
     </div>
 </div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">  client.on(&quot;error&quot;, (e) =&gt; console.error(e));
   client.on(&quot;warn&quot;, (e) =&gt; console.warn(e));
   client.on(&quot;debug&quot;, (e) =&gt; console.info(e));</code></pre>
@@ -289,7 +289,7 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 <p>So now you&#x27;re wondering, how do I test those events? Do I have to join a server with an alternate account to test the guildMemberAdd event? Isn&#x27;t that, like, super annoying?</p>
 <p>Actually, there&#x27;s an easy way to test almost any event. Without going into too many details, <code v-pre>client</code> , your Discord Client, extends something called the <code v-pre>EventHandler</code>. Any time you see <code v-pre>client.on(&quot;something&quot;)</code> it means you&#x27;re handling an <code v-pre>event</code> called <code v-pre>&quot;something&quot;</code>. But EventHandler has another function other than <code v-pre>on</code>. It has <code v-pre>emit</code>. Emit is the counterpart for <code v-pre>on</code>. When you <code v-pre>emit</code> an event, it&#x27;s handled by the callback for that event in <code v-pre>on</code>.</p>
 <p>So what does it <em>mean</em>??? It means that if <em>you</em> emit an event, your code can capture it. I know I know I&#x27;m rambling without giving you an example and you&#x27;re here for examples. Here&#x27;s one:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.emit(&quot;guildMemberAdd&quot;, message.member);</code></pre>
 </doc-codeblock></div>
 <p>This emits the event that normally triggers when a new member joins a server. So it&#x27;s <em>pretending</em> like this particular member has rejoined the server even if they have not. This obviously works for any event but you have to provide the proper arguments for it. Since <code v-pre>guildMemberAdd</code> requires only a member, any member will do (see <a href="../../frequently-asked-questions/">FAQ</a> to know how to get another member). I can trigger the <code v-pre>ready</code> event again by using <code v-pre>client.emit(&quot;ready&quot;)</code> (the ready event does not take any parameter).</p>

@@ -27,11 +27,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -232,7 +232,7 @@
     </h2>
 </doc-anchor-target>
 <p>The same rules apply for <code v-pre>MessageEmbed</code> as they do for object based ones. In fact, the builder is just a shortcut to get the same object and offers no more, no less functionality.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const embed = new Discord.MessageEmbed()
   /*
    * Alternatively, use &quot;#3498DB&quot;, [52, 152, 219] or an integer number.
@@ -274,7 +274,7 @@
 </figure>
 </p>
 <p>Now doesn&#x27;t that code look clean and amazing? Well let&#x27;s look at the object version.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">  message.channel.send({ embeds: [{
     color: 3447003,
     author: {

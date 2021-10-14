@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -195,7 +195,33 @@
 </doc-anchor-target>
 <p>This chapter assumes you&#x27;ve followed the Getting Started chapter and your bot code compiles. Also, I have to repeat: if you don&#x27;t understand the code you&#x27;re about to see, coding a bot might not be for you. Go to <a href="https://www.codecademy.com/learn/javascript">CodeAcademy</a> and learn Javascript.</p>
 <p>In this chapter I&#x27;ll guide you through the development of a simple bot with some useful commands. We&#x27;ll start with the example we created in the first chapter:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<doc-tabs>
+<doc-tab id="interaction">
+<template #title>Interaction</template>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
+<pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS]
+});
+
+client.on(&quot;ready&quot;, () =&gt; {
+  console.log(&quot;I am ready!&quot;);
+});
+
+client.on(&quot;interactionCreate&quot;, async (interaction) =&gt; {
+  if (!interaction.isCommand()) return;
+  const { commandName } = interaction;
+  if (commandName === 'ping') {
+    await interaction.reply('pong!');
+  }
+});
+
+client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
+</doc-codeblock></div>
+</doc-tab>
+<doc-tab id="message">
+<template #title>Message</template>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
@@ -205,14 +231,16 @@ client.on(&quot;ready&quot;, () =&gt; {
   console.log(&quot;I am ready!&quot;);
 });
 
-client.on(&quot;messageCreate&quot;, (message) =&gt; {
+client.on(&quot;messageCreate&quot;, async (message) =&gt; {
   if (message.content.startsWith(&quot;ping&quot;)) {
-    message.channel.send(&quot;pong!&quot;);
+    await message.channel.send(&quot;pong!&quot;);
   }
 });
 
 client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 </doc-codeblock></div>
+</doc-tab>
+</doc-tabs>
 <doc-anchor-target id="introducing-events">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#introducing-events">#</doc-anchor-trigger>
@@ -221,11 +249,24 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 </doc-anchor-target>
 <p>Before we dive into any further coding, we need to first understand what an <em>Event</em> is.</p>
 <p>This is an event:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;messageCreate&quot;, (message) =&gt; {
+<doc-tabs>
+<doc-tab id="interaction">
+<template #title>Interaction</template>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
+<pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;interactionCreate&quot;, (interaction) =&gt; {
   // This code runs when the event is triggered
 });</code></pre>
 </doc-codeblock></div>
+</doc-tab>
+<doc-tab id="message">
+<template #title>Message</template>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
+<pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;messageCreate&quot;,  (message) =&gt; {
+  // This code runs when the event is triggered
+});</code></pre>
+</doc-codeblock></div>
+</doc-tab>
+</doc-tabs>
 <p>This is, specifically, an event in <em>discord.js</em> but it&#x27;s similar to how other APIs handle events. This event triggers <em>every time the bot sees a message</em>. This includes every channel the bot has access to as well as any direct or private message it receives. If someone sends 5 messages on a channel, this event fires 5 times.</p>
 <p>Why is this important? Well, if you intend to use your bot on a large server, or if you want it to be on multiple servers, this becomes a large number of events triggering at every moment. I don&#x27;t want to go into too much optimization talk, but for a single point: <strong>use a single event function for each event</strong>.</p>
 <p>Discord.js contains a large number of events that can trigger under certain situations. For instance, the <code v-pre>ready</code> event triggers when the bot comes online. The <code v-pre>guildMemberAdd</code> event triggers when a new user joins a server shared with the bot. For a full list of events, see <a href="https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=e-applicationCommandCreate">Events in the documentation</a>. We will come back to some of those later in this chapter.</p>
@@ -253,7 +294,26 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
         </div>
     </div>
 </div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<doc-tabs>
+<doc-tab id="interaction">
+<template #title>Interaction</template>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
+<pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;interactionCreate&quot;, async (interaction) =&gt; {
+  if (!interaction.isCommand()) return;
+  const { commandName } = interaction;
+  if (commandName === 'ping') {
+    await interaction.reply('pong!');
+  } else 
+
+  if (commandName === 'foo') {
+    await interaction.reply('bar!');
+  }
+});</code></pre>
+</doc-codeblock></div>
+</doc-tab>
+<doc-tab id="message">
+<template #title>Message</template>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;messageCreate&quot;, (message) =&gt; {
   if (message.content.startsWith(&quot;ping&quot;)) {
     message.channel.send(&quot;pong!&quot;);
@@ -264,6 +324,8 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
   }
 });</code></pre>
 </doc-codeblock></div>
+</doc-tab>
+</doc-tabs>
 <p>Save your code and restart your bot. To do so, use <code v-pre>CTRL+C</code> in the command line, and re-run <code v-pre>node index.js</code>. Yes, there are better ways to reload the code, as you will see later in this book.</p>
 <p>You can test your new command by saying <code v-pre>foo</code> in a channel you share with the bot. You can also confirm that <code v-pre>ping</code> still returns <code v-pre>pong</code>!</p>
 <doc-anchor-target id="using-a-prefix">
@@ -276,7 +338,7 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 <p>First, if you don&#x27;t use a unique prefix and have more than one bot on a server, both will respond to the same commands. On developer servers, typing <code v-pre>!help</code> leads to a flood of replies and private messages which is something to avoid.</p>
 <p>Second, in the example above we respond when the message <em>starts with</em> the 3 characters, <code v-pre>foo</code>. In its current state, this means the following sentence will trigger the bot&#x27;s response: <strong>fool, you have not heard the last of me!</strong>. Yes, that&#x27;s an odd example, but it&#x27;s still valid - say this on your bot&#x27;s channel and he will respond.</p>
 <p>To work around this, we&#x27;ll be using prefix, which we will store in a variable. This way we get the prefix as well as the ability to change it for all commands in one place. Here&#x27;s an example code that does this:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Set the prefix
 const prefix = &quot;!&quot;;
 client.on(&quot;messageCreate&quot;, (message) =&gt; {
@@ -325,7 +387,7 @@ client.on(&quot;messageCreate&quot;, (message) =&gt; {
 </doc-anchor-target>
 <p>We&#x27;re pretty much done with the basic bot. There&#x27;s one last thing that I want to talk about: bots answering each other. Let&#x27;s pretend for a moment that you have two bots on your server and each can respond to the same prefixed command, <code v-pre>!help</code>. But when that command is called, it replies: <code v-pre>!help commands: Type !help followed by one of the following to see details: ping , foo</code>.</p>
 <p>Now, one person types <code v-pre>!help</code> in a channel, and both bots respond. But, they will also see the <strong>other</strong> bot saying <code v-pre>!help commands: [...]</code>, will see that as a request for help, answer each other... in an infinite loop. To prevent that from happening, we can add a second condition inside our <code v-pre>message</code> event handler, right below the one that checks for the prefix:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const prefix = &quot;!&quot;;
 client.on(&quot;messageCreate&quot;, (message) =&gt; {
   // our new check:
@@ -333,7 +395,7 @@ client.on(&quot;messageCreate&quot;, (message) =&gt; {
   // [rest of the code]
 });</code></pre>
 </doc-codeblock></div>
-<p>That condition contains an <em>OR</em> ( || ) operator, which reads as the following:</p>
+<p>That condition contains an <em>OR</em> (<code v-pre>||</code>) operator, which reads as the following:</p>
 <div class="flex mb-6">
     <div class="flex-shrink-0 w-1 rounded-tl rounded-bl bg-blue-500 dark:bg-blue-400"></div>
     <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
@@ -353,7 +415,33 @@ client.on(&quot;messageCreate&quot;, (message) =&gt; {
 </div>
 <p>And now, we have a bot that only responds to 2 commands and does not waste any power trying to figure out anything else. Is this a complete basic bot? Sure! So let&#x27;s end this page here and we&#x27;ll take a look at some new concept next.</p>
 <p>The full bot code would now be:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<doc-tabs>
+<doc-tab id="interaction">
+<template #title>Interaction</template>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
+<pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS]
+});
+
+client.on(&quot;interactionCreate&quot;, async (interaction) =&gt; {
+  if (!interaction.isCommand()) return;
+  const { commandName } = interaction;
+  if (commandName === 'ping') {
+    await interaction.reply('pong!');
+  } else 
+
+  if (commandName === 'foo') {
+    await interaction.reply('bar!');
+  }
+});
+
+client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
+</doc-codeblock></div>
+</doc-tab>
+<doc-tab id="message">
+<template #title>Message</template>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
@@ -376,6 +464,8 @@ client.on(&quot;messageCreate&quot;, (message) =&gt; {
 
 client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 </doc-codeblock></div>
+</doc-tab>
+</doc-tabs>
 <p>Every time I see that <code v-pre>SuperSecretBotTokenHere</code>, I cringe a little. See, it&#x27;s not good practice to have tokens and auth stuff in your code, it really should be in a separate file! Head on over to <a href="../adding-a-config-file/">Adding a Config File</a> and let&#x27;s get this done.</p>
 
 

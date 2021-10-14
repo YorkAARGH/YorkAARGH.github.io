@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -223,7 +223,7 @@
     </h2>
 </doc-anchor-target>
 <p>The first part is to fetch all the invites and keep them cached in an Map. This is done in the <code v-pre>ready</code> event. First, however, we must ensure that the cache is initialized <em>outside</em> of the ready event.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Initialize the invite cache
 const invites = new Map();
 
@@ -244,7 +244,7 @@ client.on(&quot;ready&quot;, async () =&gt; {
 });</code></pre>
 </doc-codeblock></div>
 <p>Moving on to the second part, we need to listen to the <code v-pre>inviteCreate</code> and <code v-pre>inviteDelete</code> event provided by the API, and update our cache accordingly.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;inviteDelete&quot;, (invite) =&gt; {
   // Delete the Invite from Cache
   invites.get(invite.guild.id).delete(invite.code);
@@ -263,7 +263,7 @@ client.on(&quot;inviteCreate&quot;, (invite) =&gt; {
     </h2>
 </doc-anchor-target>
 <p>Since we already have the Guilds and their Invites cached, we need to check if we&#x27;ve been added or removed from any of the Guilds. If we&#x27;re added, we need to fetch and cache all invites. If we&#x27;re removed, we can just delete the data from our cache. It is as simple as this</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;guildCreate&quot;, (guild) =&gt; {
   // We've been added to a new Guild. Let's fetch all the invites, and save it to our cache
   guild.invites.fetch().then(guildInvites =&gt; {
@@ -284,7 +284,7 @@ client.on(&quot;guildDelete&quot;, (guild) =&gt; {
     </h2>
 </doc-anchor-target>
 <p>So now that we have our <code v-pre>invites</code> object, we&#x27;re ready to listen to the <code v-pre>guildMemberAdd</code> event. When a new member joins, we need to fetch all of the guild&#x27;s invites once again. Then, we look through our <em>cached</em> invites and see which one has been used, by comparing the current invite&#x27;s use with the cached ones.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;guildMemberAdd&quot;, member =&gt; {
   // To compare, we need to load the current invite list.
   member.guild.invites.fetch().then(newInvites =&gt; {

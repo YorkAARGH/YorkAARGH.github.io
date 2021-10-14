@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -197,7 +197,7 @@
 <p>The first thing that you will need is a working Discord Bot. If you do not have one, please visit <a href="../../first-bot/your-first-bot/">Your First Bot</a> to get started. Now, some things to take note of. This guide is using discord.js. The bot will need some permissions. The main permission the bot will need is <code v-pre>'VIEW_AUDIT_LOGS'</code>. This permission allows the bot to view the audit logs.</p>
 <p>Now that the permission has been established. Lets get started!</p>
 <p>Firstly, we need to know what we are doing with the audit logs. Let&#x27;s log who deleted a message using the messageDelete event. This event will fire whenever a cached message is deleted in a server.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Permissions } = require(&quot;discord.js&quot;);
 
 client.on(&quot;messageDelete&quot;, async (message) =&gt; {
@@ -230,7 +230,7 @@ client.on(&quot;messageDelete&quot;, async (message) =&gt; {
 })</code></pre>
 </doc-codeblock></div>
 <p>This is what is returned from <code v-pre>entry</code>. This information allows us to compare the time stamp, the user, the channel, and the executor.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">GuildAuditLogsEntry {
   targetType: 'MESSAGE',
   actionType: 'DELETE',
@@ -243,7 +243,7 @@ client.on(&quot;messageDelete&quot;, async (message) =&gt; {
   target: [Object] }</code></pre>
 </doc-codeblock></div>
 <p>Notice the <code v-pre>reason</code> field. Some audit logs, like kicking and banning, can provide a reason. You can probably make the bot log when a user is banned and for whatever reason. What we want is the executor of the action. We do that by going to the <code v-pre>executor</code> target as that is where the user is stored. Below is showing what the information that the <code v-pre>executor</code> property provides us:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">User {
   id: '286270602820452353',
   username: 'Zoth The Wumpus',
@@ -254,7 +254,7 @@ client.on(&quot;messageDelete&quot;, async (message) =&gt; {
   lastMessage: [Object] }</code></pre>
 </doc-codeblock></div>
 <p>With all the information above, we can start creating comparisons to narrow down on who really deleted the message, whether it was the author of the message or someone else.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Please keep in mind: Discord's audit logs will not log the information if the author of that message deleted it.
 // I did this with a series of checks:
 ​ 
@@ -278,12 +278,12 @@ else {
 }</code></pre>
 </doc-codeblock></div>
 <p>Let&#x27;s take a break to explain exactly whats going on in the above code block. The <code v-pre>Date.now()</code> is getting the current time (in milliseconds). We want to take away 5 seconds for the potential delay in the audit logs. The <code v-pre>entry</code> will be retrieving the very latest audit log entry and all of its information that goes with it. What does this information contain? Everything we need for logging. With all the given information above, let&#x27;s start sending it all to a channel.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">  // We defined the logs channel earlier in this guide, so now we can send it to the channel!
   logs.send(`A message was deleted in ${message.channel.name} by ${user}`;);</code></pre>
 </doc-codeblock></div>
 <p>The final code should look like this:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Permissions } = require('discord.js');
 
 client.on(&quot;messageDelete&quot;, async (message) =&gt; {
@@ -311,7 +311,7 @@ client.on(&quot;messageDelete&quot;, async (message) =&gt; {
 </doc-codeblock></div>
 <p>And there you have it. Thats how you can view audit logs as most of them, if not all, of them work the same.</p>
 <p><a href="https://discord.js.org/#/docs/main/master/typedef/AuditLogAction">Types of Audit Logs:</a></p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">ALL: null
 GUILD_UPDATE: 1
 CHANNEL_CREATE: 10

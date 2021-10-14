@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -216,7 +216,7 @@
     </h3>
 </doc-anchor-target>
 <p>This is the &quot;easy&quot; part once you actually get used to it. It&#x27;s just like getting any other Collection element, but here&#x27;s a reminder anyway!</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// get role by ID
 let myRole = message.guild.roles.cache.get(&quot;264410914592129025&quot;);
 
@@ -247,7 +247,7 @@ let myRole = message.guild.roles.cache.find(role =&gt; role.name === &quot;Moder
     </h3>
 </doc-anchor-target>
 <p>In a <code v-pre>messageCreate</code> handler, you have access to checking the GuildMember class of the message author:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// assuming role.id is an actual ID of a valid role:
 if (message.member.roles.cache.has(role.id)) {
   console.log(&quot;Yay, the author of the message has the role!&quot;);
@@ -257,7 +257,7 @@ else {
   console.log(&quot;Nope, noppers, nadda.&quot;);
 }</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Check if they have one of many roles
 if (message.member.roles.cache.some(r=&gt;[&quot;Dev&quot;, &quot;Mod&quot;, &quot;Server Staff&quot;, &quot;Proficient&quot;].includes(r.name)) ) {
   // has one of the roles
@@ -290,7 +290,7 @@ else {
         <span>Get all members that have a role</span>
     </h3>
 </doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">let roleID = &quot;264410914592129025&quot;;
 let membersWithRole = message.guild.roles.cache.get(roleID).members;
 console.log(`Got ${membersWithRole.size} members with that role.`);</code></pre>
@@ -302,7 +302,7 @@ console.log(`Got ${membersWithRole.size} members with that role.`);</code></pre>
     </h3>
 </doc-anchor-target>
 <p>Alright, now that you have roles, you probably want to add a member to a role. Simple enough! Discord.js provides 2 handy methods to add, and remove, a role. Let&#x27;s look at them!</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">let role = message.guild.roles.cache.find(r =&gt; r.name === &quot;Team Mystic&quot;);
 
 // Let's pretend you mentioned the user you want to add a role to (!addrole @user Role Name):
@@ -335,7 +335,7 @@ member.roles.remove(role).catch(console.error);</code></pre>
     </h3>
 </doc-anchor-target>
 <p>To check for a single permission override on a channel:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Getting all permissions for a member on a channel.
 let perms = message.channel.permissionsFor(message.member);
 
@@ -353,7 +353,7 @@ message.channel.permissionsFor(message.member).serialize(false)</code></pre>
     </h3>
 </doc-anchor-target>
 <p>Just as easy, woah!</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">let perms = message.member.permissions;
 
 // Check if a member has a specific permission on the guild!

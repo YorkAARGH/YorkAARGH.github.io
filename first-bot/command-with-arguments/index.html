@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -209,7 +209,7 @@
 <p><code v-pre>[&quot;arg1&quot;, &quot;arg2&quot;, &quot;arg3&quot;]</code></p>
 <p>In the greatest majority of the code I&#x27;ve seen, arguments are <em>split</em> at the beginning of the code, and each command will put the argument array back together as necessary within the command code.</p>
 <p>In my experience, the best (and most efficient) way of separating all these things is the following 2 lines of code:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const args = message.content.slice(prefix.length).trim().split(/ +/g);
 const command = args.shift().toLowerCase();</code></pre>
 </doc-codeblock></div>
@@ -231,7 +231,7 @@ const command = args.shift().toLowerCase();</code></pre>
     </h2>
 </doc-anchor-target>
 <p>So now that we have our <code v-pre>command</code> variable, we no longer need to use the <code v-pre>if (message.content.startsWith(prefix+'command'))</code> for every command. We can simplify this by looking only at the <code v-pre>command</code> variable itself. For example, these 2 very basic commands:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (command === 'ping') {
   message.channel.send('Pong!');
 } else
@@ -242,7 +242,7 @@ if (command === 'blah') {
 </doc-codeblock></div>
 <p>Now isn&#x27;t that just so pretty and clean? I love it!</p>
 <p>Alternatively, you can also use this in a switch/case command block (I don&#x27;t like it, but to each their own, right?):</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">switch (command) {
   case &quot;ping&quot; :
     message.channel.send('Pong!');
@@ -253,7 +253,7 @@ if (command === 'blah') {
 }</code></pre>
 </doc-codeblock></div>
 <p>Here&#x27;s a complete example that&#x27;s very often the command handler I&#x27;ve used as a base to build on:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;messageCreate&quot;, message =&gt; {
   if (message.author.bot) return;
   // This is where we'll put our code.
@@ -279,7 +279,7 @@ if (command === 'blah') {
 </doc-anchor-target>
 <p>Alright let&#x27;s get to the meat of this page: actually using the <code v-pre>args</code> array in a few command examples.</p>
 <p>The first one is a perfectly useless command, but for the life of me, I can&#x27;t actually think of a really simple command using only one-word arguments. So here is a ridiculous ASL command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (command === &quot;asl&quot;) {
   let age = args[0]; // Remember arrays are 0-based!.
   let sex = args[1];
@@ -288,7 +288,7 @@ if (command === 'blah') {
 }</code></pre>
 </doc-codeblock></div>
 <p>And if you want to be <strong>really</strong> fancy with ECMAScript 6, here&#x27;s an awesome one:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (command === &quot;asl&quot;) {
   let [age, sex, location] = args;
   message.reply(`Hello ${message.author.username}, I see you're a ${age} year old ${sex} from ${location}. Wanna date?`);
@@ -327,7 +327,7 @@ if (command === 'blah') {
 </ul>
 <p>Each of these are collections so any collection method can be used on them. The most common method to use on mentions is .first() which gets the very first mention, since there is often only one of them.</p>
 <p>Let&#x27;s build a quick and dirty <code v-pre>kick</code> command, then. No error handling or mod checks - just straight up! (<em>Cul Sec</em>, as the French would say):</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Kick a single user in the mention
 if (command === &quot;kick&quot;) {
   let member = message.mentions.members.first();
@@ -343,7 +343,7 @@ if (command === &quot;kick&quot;) {
 </doc-anchor-target>
 <p>Let&#x27;s make the above kick command a little better. Because Discord now supports kick <em>reasons</em> in the Audit Logs, the Discord.js <code v-pre>kick()</code> command also supports an optional <code v-pre>reason</code> argument. But, because the reason can have multiple words in it, we need to <em>join</em> all these words together.</p>
 <p>So let&#x27;s do this now, with what we&#x27;ve already learned, and a little extra:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (command === &quot;kick&quot;) {
   let member = message.mentions.members.first();
   let reason = args.slice(1).join(&quot; &quot;);
@@ -353,7 +353,7 @@ if (command === &quot;kick&quot;) {
 <p>So, the reason is obtained by removing the first elements (the mention, which looks like <code v-pre>&lt;@1234567489213&gt;</code>) and re-joining the rest of the array elements with a space.</p>
 <p>To use this command, a user would do something like: <code v-pre>!kick @SuperGamerDude Obvious Troll, shit-posting</code>.</p>
 <p>Here&#x27;s another example, with a super simple command, the <code v-pre>say</code> command. It makes the bot say what you just sent, and then delete your message:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (command === &quot;say&quot;){
   let text = args.join(&quot; &quot;);
   message.delete();

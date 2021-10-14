@@ -27,11 +27,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -207,7 +207,7 @@ OWNER=[YOUR_OWNER_ID]
 PREFIX=[DEFAULT_BOT_PREFIX]</code></pre>
 </doc-codeblock></div>
 <p>After you create and update this file, save it and head over to your main file. I will build off of the default Discord.js example code.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client } = require(&quot;discord.js&quot;);
 // Importing this allows you to access the environment variables of the running node process
 require(&quot;dotenv&quot;).config();
@@ -279,13 +279,13 @@ client.login();</code></pre>
 <p>When starting your application, either locally on your computer, in a npm start script in your <code v-pre>package.json</code> or even in a <code v-pre>Dockerfile</code> you can set what environment your bot should run in.</p>
 <p>For example, you may want to run your bot in production on Heroku or Glitch and in development on your computer. You can simply do that via adding new scripts in your <code v-pre>package.json</code>.</p>
 <p>Upon doing <code v-pre>npm init</code> when you first made your bot, you should have seen a <code v-pre>test</code> script created. The scripts portion of your <code v-pre>package.json</code> should look like this if you added nothing.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">&quot;scripts&quot;: {
   &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
 },</code></pre>
 </doc-codeblock></div>
 <p>Here, you can add multiple scripts. Where going to add a few scripts. <code v-pre>production</code>, <code v-pre>development</code>, and <code v-pre>start</code>.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">&quot;scripts&quot;: {
   &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
   &quot;start&quot;: &quot;node .&quot;,
@@ -298,7 +298,7 @@ client.login();</code></pre>
 <li>To start your bot in a development environment, you would do <code v-pre>npm run development</code>. This will set <code v-pre>process.env.NODE_ENV</code> to <code v-pre>development</code></li>
 </ul>
 <p>In your code, you can define what should happen depending on the environment loaded. Here&#x27;s an example where your bot should only show the stream status if the environment is in <code v-pre>production</code> when the <code v-pre>ready</code> event is fired:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">require(&quot;dotenv&quot;).config();
 
 // process.env.NODE_ENV allows you to get the environment the node process is in
@@ -335,7 +335,7 @@ NODE_ENV=development&amp;&amp;node app.js</code></pre>
 worker npm run production</code></pre>
 </doc-codeblock></div>
 <p>If you&#x27;re using Glitch, you can add this in your <code v-pre>start</code> script in your <code v-pre>package.json</code>:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">&quot;scripts&quot;: {
   &quot;test&quot;: &quot;echo \&quot;Error: no test specified\&quot; &amp;&amp; exit 1&quot;,
   &quot;start&quot;: &quot;NODE_ENV=production&amp;&amp;node app.js&quot;

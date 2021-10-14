@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -234,14 +234,14 @@
 </div>
 <p>I don&#x27;t care if it&#x27;s a server owner, someone you&#x27;ve been talking to for months, you <strong>cannot</strong> trust anyone with eval. There&#x27;s only one exception to this rule: Someone you know <strong>in real life</strong> that you can punch in the face when they actually destroy half your server or mistakenly ban everyone in every server your bot is in. Eval bypasses any command-based permission you might have, it bypasses all security checks. Eval is all powerful.</p>
 <p>So how do you secure it? Simple: only allow use from your own user ID. So for example my user ID is <code v-pre>139412744439988224</code> so I check whether the message author&#x27;s ID is mine, which we added into our config at the start:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">{
   // The rest of the config
   &quot;ownerID&quot;: &quot;139412744439988224&quot;
 }</code></pre>
 </doc-codeblock></div>
 <p>In the code for the bot:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// If the message author's ID does not equal
 // our ownerID, get outta there!
 if (message.author.id !== config.ownerID) return;</code></pre>
@@ -272,7 +272,7 @@ if (message.author.id !== config.ownerID) return;</code></pre>
         </div>
     </div>
 </div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// This function cleans up and prepares the
 // result of our eval command input for sending
 // to the channel
@@ -298,7 +298,7 @@ return text;
 }</code></pre>
 </doc-codeblock></div>
 <p>Alright, So let&#x27;s get down to the brass tax: The actual eval command. Here it is in all its glory, assuming you&#x27;ve followed this guide all along:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// This command goes inside of our message event handler
 client.on(&quot;messageCreate&quot;, async (message) =&gt; {
 
@@ -359,13 +359,13 @@ client.on(&quot;messageCreate&quot;, async (message) =&gt; {
     </div>
 </div>
 <p>Adjust our <code v-pre>clean()</code> function to receive the client as an input like so.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const clean = async (client, text) =&gt; { 
   // The rest of the code
 }</code></pre>
 </doc-codeblock></div>
 <p>Be sure to supply the client as an input when we call the function later in the code.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">    // ...
 
     try {
@@ -375,7 +375,7 @@ client.on(&quot;messageCreate&quot;, async (message) =&gt; {
 
     // ...</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const clean = async (client, text) =&gt; { 
   // ...
 

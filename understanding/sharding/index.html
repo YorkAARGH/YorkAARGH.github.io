@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -216,7 +216,7 @@
     </h3>
 </doc-anchor-target>
 <p>If you would like to use this, adjust the Client options in your main bot file where you define your client like so:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">/*
     The following code goes into your main bot file.
 */
@@ -263,7 +263,7 @@ const client = new Client({ shardCount: &quot;auto&quot; });</code></pre>
         <span>Example Sharding Manager Code</span>
     </h3>
 </doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">/*
     The following code goes into it's own file, and you run this file
     instead of your main bot file.
@@ -302,7 +302,7 @@ manager.spawn();</code></pre>
 </doc-anchor-target>
 <p><a href="https://discord.js.org/#/docs/main/stable/class/ShardClientUtil?scrollTo=fetchClientValues"><code v-pre>fetchClientValues</code></a> gets Client properties from all shards. This is what you should use when you would like to get any of the nested properties of the Client, such as <code v-pre>guilds.cache.size</code> or <code v-pre>uptime</code>. It&#x27;s useful for getting things like Collection sizes, basic client properties, and unprocessed information about the client.</p>
 <p>Example:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">/*
     Example result of fetchClientValues() on a bot with 4,300 guilds split across
     4 shards.
@@ -327,7 +327,7 @@ console.log(res);
 </doc-codeblock></div>
 <p>Let&#x27;s say you want to do something like get your total server count - In a non-sharded environment, this would be as simple as getting the <code v-pre>client.guilds.cache.size</code>. However, in this case <code v-pre>client.guilds.cache.size</code> will not return the total servers your bot is in. Instead it returns only the total number of servers <em>on this shard</em>, like in the first part of the example above.</p>
 <p>Here&#x27;s an example of a function that uses <code v-pre>fetchClientValues()</code> to first get, then add the total number of guilds from <em>all shards</em> (i.e. your bot&#x27;s total guild count):</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">/*
     Example by ZiNc#2032
 
@@ -370,7 +370,7 @@ const getServerCount = async () =&gt; {
 </doc-anchor-target>
 <p><a href="https://discord.js.org/#/docs/main/stable/class/ShardClientUtil?scrollTo=broadcastEval"><code v-pre>broadcastEval</code></a> evaluates the input in the context of each shard&#x27;s Client(s). This is what you should use when you want to execute a method or process data on a shard and return the result. It&#x27;s useful for getting information that isn&#x27;t available through client properties and must instead be retrieved through the use of methods.</p>
 <p>Example:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">/*
     Example of result of broadcastEval() on a bot with 4 servers split across
     2 shards.
@@ -405,7 +405,7 @@ console.log(res);
 </doc-codeblock></div>
 <p>Say you want to get a guild from your client. In a non-sharded environment, you would simply use <code v-pre>client.guilds.cache.get('ID')</code> or something of that nature and then carry on with your code. In this case however, it is possible that the guild you&#x27;re trying to get <em>is not present on the shard</em>. In order to get the guild for use, you would then need to fetch it from whatever shard it is present on using <code v-pre>broadcastEval()</code>.</p>
 <p>Here&#x27;s an example of a function that uses <code v-pre>broadcastEval()</code> to get a single guild no matter what shard it is present on:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">/*
       Example by ZiNc#2032
 
@@ -447,7 +447,7 @@ const getServer = async (guildID) =&gt; {
     </div>
 </div>
 <p>Example of a Guild object returned by <a href="/#broadcasteval"><code v-pre>broadcastEval</code></a>:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const res = await client.shard.broadcastEval((c) =&gt; c.guilds.cache.map((guild) =&gt; 
     guild.members.cache.size));
 console.log(res);

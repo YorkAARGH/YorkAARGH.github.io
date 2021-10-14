@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -229,7 +229,7 @@
 <p>You&#x27;ve got SQLite installed, now what do we want in our table? I&#x27;ll tell ya!</p>
 <p>For this example points system we want the user&#x27;s ID, points and level to be compliant with Discord&#x27;s Developer Terms of Service. I&#x27;m not going to go to deep in to the jargon surrounding SQL and SQLite, but the tables are made from rows and columns of data. Got it? Good, moving on!</p>
 <p>Our starting point is a very basic message handler with pre-existing commands - such as what we see in the <a href="../../first-bot/command-with-arguments/">Command with Arguments</a> page of this guide. The code is as such:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
@@ -254,12 +254,12 @@ client.on(&quot;messageCreate&quot;, message =&gt; {
 client.login(config.token);</code></pre>
 </doc-codeblock></div>
 <p>Now we&#x27;ve got that we should <code v-pre>require</code> sqlite and make use of it, put the following under <code v-pre>const client</code>:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const SQLite = require(&quot;better-sqlite3&quot;);
 const sql = new SQLite(&quot;./scores.sqlite&quot;);</code></pre>
 </doc-codeblock></div>
 <p>We do have a small caveat - we really don&#x27;t want to react on Direct Messages, so our whole code will be in a block that checks for that. We don&#x27;t just want to ignore DMs because our bot itself might have DM commands!</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;messageCreate&quot;, message =&gt; {
   if (message.author.bot) return;
   if (message.guild) {
@@ -269,7 +269,7 @@ const sql = new SQLite(&quot;./scores.sqlite&quot;);</code></pre>
 });</code></pre>
 </doc-codeblock></div>
 <p>Your code should look like this now:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client } = require(&quot;discord.js&quot;);
 const client = new Client();
 const config = require(&quot;./config.json&quot;);
@@ -303,7 +303,7 @@ client.login(config.token);</code></pre>
 </doc-anchor-target>
 <p>One important thing with SQLite is that it will only create tables if we ask it to. That means, we have to make sure that the table exists. We&#x27;ll do this in our <code v-pre>ready</code> event, so it will execute only once when we start the bot. Now, I&#x27;m doing <em>a little bit of magic</em> here, which includes setting some database toggles that make SQLite faster. If you want to look up &quot;pragma syncronous&quot; and &quot;pragma journal mode wal&quot;, by all means go learn what they are, but these are good <em>production</em> settings to have.</p>
 <p>And, another bit of magic here, is that we can <em>prepare</em> some statements beforehand, and simply <em>run</em> them with specific values later on. This is a more advanced concept of SQL, but it should be easy to follow even if you&#x27;re not familiar with it. So here&#x27;s the code for the ready event:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;ready&quot;, () =&gt; {
   // Check if the table &quot;points&quot; exists.
   const table = sql.prepare(&quot;SELECT count(*) FROM sqlite_master WHERE type='table' AND name = 'scores';&quot;).get();
@@ -328,11 +328,11 @@ client.login(config.token);</code></pre>
     </h2>
 </doc-anchor-target>
 <p>Now we can go right ahead and start using the database to retrieve and store points data. We&#x27;ll be doing this inside the Message handler, and our very first step is to try to retrieve the existing points for a user inside the points table, which would look like this:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">let score = client.getScore.get(message.author.id, message.guild.id);</code></pre>
 </doc-codeblock></div>
 <p>Importantly, if the bot has never seen this user before they won&#x27;t have any data, which means we have to &quot;define&quot; their initial values. This can be done with a simple condition, though:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (!score) {
   score = {
     id: `${message.guild.id}-${message.author.id}`,
@@ -350,7 +350,7 @@ client.login(config.token);</code></pre>
     </h2>
 </doc-anchor-target>
 <p>Now that we have our initial &quot;scores&quot; value, we can do two things: first, increment the points. And second, calculate the level of the user.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Increment the score
 score.points++;
 
@@ -365,12 +365,12 @@ if (score.level &lt; curLevel) {
 }</code></pre>
 </doc-codeblock></div>
 <p>And finally, we need to save all this back to the database. SQLite has a great &quot;secret&quot; feature called &quot;INSERT OR REPLACE&quot; and we&#x27;ve already created a prepared statement for this, called <code v-pre>client.setScore</code>. This will basically <em>update an existing row with the same</em> <code v-pre>id</code><em>, or create a new row if the</em> <code v-pre>id</code> <em>isn&#x27;t found</em>. This explains why we have the <code v-pre>id</code> field there, in case you were wondering.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// This looks super simple because it's calling upon the prepared statement!
 client.setScore.run(score);</code></pre>
 </doc-codeblock></div>
 <p>Let&#x27;s put it all together. Your code should now look like this.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, MessageEmbed } = require(&quot;discord.js&quot;);
 const client = new Client();
 const config = require(&quot;./config.json&quot;);
@@ -427,7 +427,7 @@ client.login(config.token);</code></pre>
     </h2>
 </doc-anchor-target>
 <p>Now we&#x27;ve got the core of this code done, we need to add a few commands, which we can add below all our code in the message handler. We&#x27;ve already separated the arguments and commands, so this will be pretty easy, especially since we&#x27;ve already loaded the <code v-pre>score</code>, calculated the points, and the level!</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (command === &quot;points&quot;) {
   return message.reply(`You currently have ${score.points} points and are level ${score.level}!`);
 }</code></pre>
@@ -439,7 +439,7 @@ client.login(config.token);</code></pre>
     </h3>
 </doc-anchor-target>
 <p>Here are some quick &amp; easy commands you can use, assuming the above code is used and this is still happening in the same file:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// You can modify the code below to remove points from the mentioned user as well!
 if (command === &quot;give&quot;) {
   // Limited to guild owner - adjust to your own preference!

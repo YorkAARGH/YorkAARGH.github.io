@@ -27,11 +27,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -199,7 +199,7 @@
 <p>Now, one way we could use this, is to grab mentions... For some reason people think it&#x27;s acceptable to mention me then shortly afterwards remove the mention if I don&#x27;t respond within X seconds or minutes.</p>
 <p>We have two choices, either create a stand-alone bot, or throw it in an existing bot... For the purposes of this guide I will throw the code in a stand alone bot, but it should be pretty self-explanatory how to add this to an existing bot.</p>
 <p>Let&#x27;s grab some example code...</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
@@ -222,7 +222,7 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 </doc-codeblock></div>
 <p>Now, we&#x27;ve got the example code, we want to take our previously made webhook and grab the <code v-pre>id</code> and <code v-pre>token</code> from the URL, let&#x27;s get it together!</p>
 <p>You want to start off by defining your webhook at the top of your code, don&#x27;t forget to replace <code v-pre>Webhook ID</code> and <code v-pre>Webhook Token</code> with their respective values.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents, WebhookClient } = require(&quot;discord.js&quot;);
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
@@ -246,7 +246,7 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 </doc-codeblock></div>
 <p>Now, this bit will be a little long winded; but inside the message event you want to check for mentions, now the more mentions you can capture the better, for example there&#x27;s the <code v-pre>@everyone</code> and <code v-pre>@here</code> mentions, role mentions and the direct mentions.</p>
 <p>The official documentation has the wonderful <code v-pre>Message.mentions.has(data)</code> boolean, that data can be a <code v-pre>GuildChannel</code>, <code v-pre>User</code> or <code v-pre>Role</code> Object, or a <code v-pre>string</code> representing the ID of any of the previously mentioned things, so inside the message event create a new <code v-pre>if statement</code>.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;messageCreate&quot;, (message) =&gt; {
   if (message.author.id === client.user.id || message.author.bot) return;
   if (message.mentions.has(&quot;YOUR USER ID&quot;)) {
@@ -260,7 +260,7 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 </doc-codeblock></div>
 <p>Okay, that covers direct mentions, but what about the mentioned <code v-pre>@everyone</code>, <code v-pre>@here</code> and role mentions?</p>
 <p>Well the <code v-pre>message</code> object has <code v-pre>mentions</code> which has both <code v-pre>everyone</code> and <code v-pre>roles</code>, so this is what the code will look like so far...</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;messageCreate&quot;, (message) =&gt; {
   if (message.author.id === client.user.id || message.author.bot) return;
   if (message.mentions.has(&quot;YOUR USER ID&quot;) || message.mentions.everyone || (message.guild &amp;&amp; message.mentions.roles.filter(r =&gt; message.guild.members.cache.get(&quot;YOUR USER ID&quot;).roles.cache.has(r.id)).size &gt; 0)) {
@@ -273,12 +273,12 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 });</code></pre>
 </doc-codeblock></div>
 <p>Alright, that&#x27;s the mention detection stuff finished, but let me cover that last bit...</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">(message.guild &amp;&amp; message.mentions.roles.filter(r =&gt; message.guild.members.cache.get(&quot;YOUR USER ID&quot;).roles.cache.has(r.id)).size &gt; 0)</code></pre>
 </doc-codeblock></div>
 <p>The <code v-pre>message.guild</code> check will make sure we&#x27;re being mentioned inside a guild channel, now the next bit is a little more complex basically the code is checking for any roles that were mentioned and filtering them against our own roles if any of them match (making the size greater than 0) it&#x27;ll return true.</p>
 <p>So far so good, we&#x27;re almost half way there... We&#x27;ve set up the conditions to check for mentions, now we just need to ignore a few things, namely ourselves, and bots.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;messageCreate&quot;, (message) =&gt; {
   if (message.author.id === client.user.id || message.author.bot) return;
   if (message.mentions.has(&quot;YOUR USER ID&quot;) || message.mentions.everyone || (message.guild &amp;&amp; message.mentions.roles.filter(r =&gt; message.guild.members.cache.get(&quot;YOUR USER ID&quot;).roles.cache.has(r.id)).size &gt; 0)) {
@@ -293,7 +293,7 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 </doc-codeblock></div>
 <p>This code may look familiar, and you would be right. It&#x27;s what we use to get bots to ignore themselves and other bots, but we&#x27;ve changed it slightly so if the <code v-pre>message.author</code> is the target user (you), then ignore it.</p>
 <p>Alright, now we&#x27;re done with the conditions for the webhook, let&#x27;s actually use the webhook! Take your code so far (or copy the code from below)...</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, WebhookClient } = require(&quot;discord.js&quot;);
 const client = new Client();
 const mentionHook = new WebhookClient({ id: 'Webhook ID', token: 'Webhook Token' });
@@ -318,7 +318,7 @@ client.on(&quot;messageCreate&quot;, (message) =&gt; {
 client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 </doc-codeblock></div>
 <p>... and add the following line below where it says <code v-pre>// Additional Code</code></p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">mentionHook.send(&quot;You were mentioned!&quot;);</code></pre>
 </doc-codeblock></div>
 <p>Now, let&#x27;s fill in all of the details we need to get this working (webhook <code v-pre>id</code> and <code v-pre>token</code>, and your user <code v-pre>id</code>)</p>
@@ -339,7 +339,7 @@ client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
         </div>
     </div>
 </div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, WebhookClient } = require(&quot;discord.js&quot;);
 const client = new Client();
 const mentionHook = new WebhookClient({ id: &quot;WEBHOOK_ID&quot;, token: &quot;WEBHOOK_TOKEN&quot; });

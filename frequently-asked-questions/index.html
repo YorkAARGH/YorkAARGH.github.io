@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -206,19 +206,19 @@
         <span>Bot and Bot Client</span>
     </h2>
 </doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Set the bot's &quot;Playing: &quot; status (must be in an event!)
 client.on(&quot;ready&quot;, () =&gt; {
     client.user.setActivity(&quot;my code&quot;, { type: &quot;WATCHING&quot;})
 })</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Set the bot's online/idle/dnd/invisible status
 client.on(&quot;ready&quot;, () =&gt; {
     client.user.setStatus(&quot;online&quot;);
 });</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Set the bot's presence (activity and status)
 client.on(&quot;ready&quot;, () =&gt; {
     client.user.setPresence({
@@ -250,7 +250,7 @@ For <code v-pre>setPresence</code>, you need to provide the presence data object
         </div>
     </div>
 </div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;ready&quot;, () =&gt; {
     client.user.setActivity(&quot;my code&quot;, { type: &quot;STREAMING&quot;, url: &quot;https://www.twitch.tv/an_idiots_guide&quot; })
 })</code></pre>
@@ -278,41 +278,41 @@ For <code v-pre>setPresence</code>, you need to provide the presence data object
         </div>
     </div>
 </div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Get a User by ID
 client.users.cache.get(&quot;user id here&quot;);
 // Returns &lt;User&gt;</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Get a Member by ID
 message.guild.members.cache.get(&quot;user ID here&quot;);
 // Returns &lt;Member&gt;</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Get a Member from message Mention
 message.mentions.members.first();
 // Returns &lt;Member&gt;, if there is a mentioned member</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Send a Direct Message to a user
 message.author.send(&quot;hello&quot;);
 // With Member it works too:
 message.member.send(&quot;Heya!&quot;);</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Mention a user in a message
 message.channel.send(`Hello ${message.author.toString()}, and welcome!`);
 // or
 message.channel.send(&quot;Hello &quot; + message.author.toString() + &quot;, and welcome!&quot;);</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Restrict a command to a specific user by ID
 if (message.content.startsWith(`${prefix}commandname`)) {
     if (message.author.id !== &quot;A user ID&quot;) return;
     // Your Command Here
 }</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">message.guild.members.fetch(message.author)
   .then(member =&gt; {
     // The member is available here.
@@ -327,22 +327,22 @@ if (message.content.startsWith(`${prefix}commandname`)) {
         <span>Channels and Guilds</span>
     </h2>
 </doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Get a Guild by ID
 client.guilds.cache.get(&quot;the guild id&quot;);
 // Returns &lt;Guild&gt;</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Get a Channel by ID
 client.channels.cache.get(&quot;the channel id&quot;);
 // Returns &lt;Channel&gt;</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Get a Channel by Name
 message.guild.channels.cache.find(channel =&gt; channel.name === &quot;channel-name&quot;);
 // returns &lt;Channel&gt;</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Create an invite and send it in the channel
 // You can only create an invite from a GuildChannel
 // Messages can only be sent to a TextChannel
@@ -356,12 +356,12 @@ message.guild.channels.cache.get('&lt;CHANNEL ID&gt;').createInvite().then(invit
         <span>Messages</span>
     </h2>
 </doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Editing a message the bot sent
 message.channel.send(&quot;Test&quot;).then(sentMessage =&gt; sentMessage.edit(&quot;Blah&quot;));
 // message now reads : &quot;Blah&quot;</code></pre>
 </doc-codeblock></div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">message.channel.messages.fetch(&quot;352292052538753025&quot;)
   .then(message =&gt; {
     // do something with it

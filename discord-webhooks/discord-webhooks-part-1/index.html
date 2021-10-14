@@ -27,11 +27,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -197,7 +197,7 @@
 </doc-anchor-target>
 <p>This has been a rather demanded topic recently, everyone wants to know how to use the webhooks, so here I am with this guide to explain the basic coverage of the webhooks.</p>
 <p>As per usual let&#x27;s grab the example source code.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
 const client = new Client({
   intents: [Intents.FLAGS.GUILD, Intents.FLAGS.GUILD_MESSAGES]
@@ -216,7 +216,7 @@ client.on(&quot;messageCreate&quot;, (message) =&gt; {
 client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 </doc-codeblock></div>
 <p>Right, we&#x27;ll start off slow, we need to create a webhook first, if we look at the <a href="https://discord.js.org/#/docs/main/stable/class/TextChannel?scrollTo=createWebhook">documentation</a> it comes with an example, that is basically all we need to create a webhook, but we&#x27;ll add some polish to it and throw it into a basic command.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// This will create the webhook with the name &quot;Example Webhook&quot; and an example avatar.
 message.channel.createWebhook(&quot;Example Webhook&quot;, { avatar: &quot;https://i.imgur.com/p2qNFag.png&quot; })
 // This will get the bot to DM you the webhook, if you use this in a selfbot,
@@ -237,7 +237,7 @@ message.channel.createWebhook(&quot;Example Webhook&quot;, { avatar: &quot;https
 </p>
 <p>Now, that&#x27;s all well and good, we can create the webhooks and get our bot to DM us, but the values are <em>hardcoded</em>, which means if we run that command, we&#x27;d get webhooks by the same name / avatar all the time, let&#x27;s fix that shall we? we&#x27;ll be looking at the <a href="../../first-bot/command-with-arguments/">command arguments</a> page.</p>
 <p>You should have a message handler that looks something like this.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">let prefix = &quot;~&quot;;
 client.on(&quot;messageCreate&quot;, message =&gt; {
   let args = message.content.split(&quot; &quot;).slice(1);
@@ -250,7 +250,7 @@ client.on(&quot;messageCreate&quot;, message =&gt; {
 </doc-codeblock></div>
 <p>So far so good, but we&#x27;re going to run into a problem, what if you want to give your webhook a name that contains spaces? Right now you&#x27;d end up with the avatar url in the name, so we&#x27;re going to have to use some <em>regex</em>, <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions">Regular Expressions</a> is very powerful, and very daunting to start out with, but don&#x27;t worry, the regex I&#x27;m going to supply for this example works, just drop it in your code and you&#x27;re good.</p>
 <p>Here&#x27;s the regex on it&#x27;s own</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">/https?:\/\/.+\.(?:png|jpg|jpeg)/gi</code></pre>
 </doc-codeblock></div>
 <p>Using the above regex with <code v-pre>match</code>, <code v-pre>replace</code> and <code v-pre>test</code> will allow you to isolate the image url in the string and leave the remaining string to be used as the webhook&#x27;s name, there&#x27;s an amazing online tool called <a href="https://regex101.com/">regex101.com</a>, with that tool I was able to create the above regex, here&#x27;s an image of it in action.</p>
@@ -261,7 +261,7 @@ client.on(&quot;messageCreate&quot;, message =&gt; {
 </p>
 <p>I&#x27;m not going to go into much detail, but the fact that both of the test strings are highlighted, and it&#x27;s saying there&#x27;s 2 matches is all we need to know, it works with links starting with <code v-pre>http</code> and <code v-pre>https</code>, and it looks for valid extensions, which are jpg, jpeg and png.</p>
 <p>let&#x27;s do the rest of the command shall we? we&#x27;ve got our regex, and we know we need to use <code v-pre>match</code>, <code v-pre>replace</code> and <code v-pre>test</code>, so we should <code v-pre>test</code> for a link first using our regex, if it returns false we need to notify the user, if it returns true we need to <code v-pre>match</code> and <code v-pre>replace</code> for the rest, the code can look like this.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const nameAvatar = args.join(&quot; &quot;);
 const linkCheck = /https?:\/\/.+\.(?:png|jpg|jpeg)/gi;
 if (!linkCheck.test(nameAvatar)) return message.reply(&quot;You must supply an image link.&quot;);

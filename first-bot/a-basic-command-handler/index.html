@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -232,7 +232,7 @@
 </doc-anchor-target>
 <p>Because we&#x27;re creating a separate file (module) for each event and each commands, our main file (app.js, or index.js, or whatever you&#x27;re calling it) will change drastically from a list of commands to a simple file that loads other files.</p>
 <p>Two main loops are needed to execute this master plan. First off, the one that will load all the <code v-pre>events</code> files. Each event will need to have a file in that folder, named <em>exactly</em> like the event itself. So for <code v-pre>messageCreate</code> we want <code v-pre>./events/messageCreate.js</code>, for <code v-pre>guildBanAdd</code> we want <code v-pre>./events/guildBanAdd.js</code> , etc.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">// Read the Files in the Events Directory and filter files that ends with .js
 const files = fs.readdirSync(&quot;./events&quot;).filter(file =&gt; file.endsWith(&quot;.js&quot;));
 // Loop over each file
@@ -249,7 +249,7 @@ for (const file of files) {
 }</code></pre>
 </doc-codeblock></div>
 <p>The second loop is going to be for the commands themselves. For a couple of reasons, we want to put the commands inside of a structure that we can refer to later - we&#x27;ll use a Discord Collection:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.commands = new Discord.Collection();
 // Read the Commands Directory, and filter the files that end with .js
 const commands = fs.readdirSync(&quot;./commands&quot;).filter(file =&gt; file.endsWith(&quot;.js&quot;));
@@ -266,7 +266,7 @@ for (const file of commands) {
 }</code></pre>
 </doc-codeblock></div>
 <p>Ok so with that being said, our main file now looks like this (how <em>clean</em> is that, really?):</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
 const fs = require(&quot;fs&quot;);
 
@@ -303,7 +303,7 @@ client.login(config.token);</code></pre>
     </h2>
 </doc-anchor-target>
 <p>The <code v-pre>messageCreate</code> event is obviously the most important one, as it will receive all messages sent to the bot. Create the <code v-pre>./events/messageCreate.js</code> file (make sure it&#x27;s spelled <em>exactly</em> like that) and look at this bit of code:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">module.exports = (client, message) =&gt; {
   // Ignore all bots
   if (message.author.bot) return;
@@ -333,13 +333,13 @@ client.login(config.token);</code></pre>
     </h2>
 </doc-anchor-target>
 <p>This would be the content of the <code v-pre>./commands/ping.js</code> file, which is called with <code v-pre>!ping</code> (assuming <code v-pre>!</code> as a prefix)</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">exports.run = (client, message, args) =&gt; {
     message.channel.send(&quot;pong!&quot;).catch(console.error);
 }</code></pre>
 </doc-codeblock></div>
 <p>Another example would be the more complex <code v-pre>./commands/kick.js</code> command, called using <code v-pre>!kick @user</code></p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">exports.run = (client, message, [mention, ...reason]) =&gt; {
   const modRole = message.guild.roles.cache.find(role =&gt; role.name === &quot;Mods&quot;);
   if (!modRole)
@@ -369,14 +369,14 @@ client.login(config.token);</code></pre>
     </h2>
 </doc-anchor-target>
 <p>Events are handled almost exactly in the same way, except that the number of arguments depends on which event it is. For example, the <code v-pre>ready</code> event:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">module.exports = (client) =&gt; {
   console.log(`Ready to serve in ${client.channels.cache.size} channels on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users.`);
 }</code></pre>
 </doc-codeblock></div>
 <p>Note that the <code v-pre>ready</code> event normally doesn&#x27;t have any arguments, it&#x27;s just <code v-pre>()</code>. But because we&#x27;re in separate modules, it&#x27;s necessary to &quot;pass&quot; the <code v-pre>client</code> variable to it or it would not be accessible. That&#x27;s what our fancy <code v-pre>bind</code> is for in the main file!</p>
 <p>Here&#x27;s another example with the <code v-pre>guildMemberAdd</code> event:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Permissions } = require(&quot;discord.js&quot;);
 
 module.exports = (client, member) =&gt; {
@@ -393,7 +393,7 @@ module.exports = (client, member) =&gt; {
 </doc-anchor-target>
 <p>Because of the way <code v-pre>require()</code> works in node, if you modify any of the command files in <code v-pre>./commands</code> , the changes are not reflected immediately when you call that command again - because <code v-pre>require()</code> <em>caches</em> the file in memory instead of reading it every time. While this is great for efficiency, it means we need to clear that cached version if we change commands.</p>
 <p>The <em>Reload</em> command does just that, simply deletes the cache so the next time that specific command is run, it&#x27;ll refresh its code from the file.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">exports.run = (client, message, args) =&gt; {
   if (!args || args.length &lt; 1) return message.reply(&quot;Must provide a command name to reload.&quot;);
   const commandName = args[0];

@@ -27,11 +27,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -213,7 +213,7 @@
 </div>
 <p>I&#x27;ve had this request since I started An Idiot&#x27;s Guide, in fact it was one of the very first requests I had, but I had a feeling it would be a disappointing short episode, maybe a 5 minute long episode. But for a written guide it&#x27;d be perfect!</p>
 <p>So to get started, let&#x27;s grab the example from <a href="../../getting-started/getting-started-long-version/">getting started</a> and shove it in a file.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
@@ -232,7 +232,7 @@ client.on(&quot;messageCreate&quot;, (message) =&gt; {
 client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 </doc-codeblock></div>
 <p>Once you&#x27;ve got that, we should go check out <code v-pre>cleverbot-node</code> on <a href="https://www.npmjs.com/package/cleverbot-node">npmjs.com</a> and grab their example code</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">var Cleverbot = require(&quot;cleverbot-node&quot;);
 cleverbot = new Cleverbot;
 cleverbot.configure({ botapi: &quot;IAMKEY&quot; });
@@ -247,12 +247,12 @@ cleverbot.write(cleverMessage, function (response) {
 <p><strong>NOTE:</strong> A lot of the naive developers would just shove the cleverbot example straight in their message event and wonder why it wasn&#x27;t working. It would create a new instance of Cleverbot and would eventually cause a memory leak.</p>
 </blockquote>
 <p>Right, we need to take the first two lines of the cleverbot example...</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">var Cleverbot = require(&quot;cleverbot-node&quot;);
 cleverbot = new Cleverbot;</code></pre>
 </doc-codeblock></div>
 <p>...and put them with our discord definitions.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
 const Cleverbot = require(&quot;cleverbot-node&quot;);
 const client = new Client({
@@ -264,18 +264,18 @@ clbot.configure({ botapi: &quot;IAMKEY&quot; });</code></pre>
 <p>I renamed <code v-pre>cleverbot</code> to <code v-pre>clbot</code> to reduce any possible confusion between the variable names as JavaScript is case sensitive.</p>
 <p>Then we take the rest of the code and place that inside our message event handler, but for this example I only want the bot to talk to me in DM&#x27;s, so we&#x27;ll check the channel <code v-pre>type</code> with the following code, you can make it respond on mentions or even in channels (I would honestly advise against that.) but we also need to add the <code v-pre>DIRECT_MESSAGES</code> intent and the <code v-pre>CHANNEL</code> partial as DM channels can be uncached.</p>
 <p>Checking the channel type.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (message.channel.type === &quot;DM&quot;) {
   // Cleverbot code goes here.
 }</code></pre>
 </doc-codeblock></div>
 <p>Don&#x27;t forget to add these within your client object.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">[Intents.FLAGS.DIRECT_MESSAGES],
 partials: [&quot;CHANNEL&quot;]</code></pre>
 </doc-codeblock></div>
 <p>Your code should look something like this...</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client, Intents } = require(&quot;discord.js&quot;);
 const Cleverbot = require(&quot;cleverbot-node&quot;);
 const client = new Client({

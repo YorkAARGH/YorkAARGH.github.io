@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -221,7 +221,7 @@
 <p><code v-pre>let result = &lt;Collection&gt;.find(item =&gt; item.property === &quot;a value&quot;)</code></p>
 <p>You can also be looking at other data, properties not a the top level, etc. Your imagination is the limit.</p>
 <p>Want a great example? Here&#x27;s getting the first role that matches one of 4 role names:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const acceptedRoles = [&quot;Mod&quot;, &quot;Moderator&quot;, &quot;Staff&quot;, &quot;Mod Staff&quot;];
 const modRole = member.roles.cache.find(role =&gt; acceptedRoles.includes(role.name));
 if (!modRole) return &quot;No role found&quot;;</code></pre>
@@ -243,7 +243,7 @@ if (!modRole) return &quot;No role found&quot;;</code></pre>
         </div>
     </div>
 </div>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const hasModRole = member.roles.cache.some(role =&gt; acceptedRoles.includes(role.name));
 // hasModRole is boolean.</code></pre>
 </doc-codeblock></div>
@@ -263,12 +263,12 @@ if (!modRole) return &quot;No role found&quot;;</code></pre>
     </h2>
 </doc-anchor-target>
 <p>One great thing you can do with a collection is to grab specific data from it with <code v-pre>map()</code>, which is useful when listing stuff. <code v-pre>&lt;Collection&gt;.map()</code> takes a function which returns a string. Its result is an array of all the strings returned by each item. Here&#x27;s an example: let&#x27;s get a complete list of all the guilds a bot is in, by name:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const guildNames = client.guilds.cache.map(g =&gt; g.name).join(&quot;\n&quot;)</code></pre>
 </doc-codeblock></div>
 <p>Since <code v-pre>.join()</code> is an array method, which links all entries together, we get a nice list of all guilds, with a line return between each. Neat!</p>
 <p>We can also get a most custom string. Let&#x27;s pretend the <code v-pre>user.tag</code> property doesn&#x27;t exist, and we wanted to get all the user#discriminator in our bot. Here&#x27;s how we&#x27;d do it (using awesome template literals):</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const tags = client.users.cache.map(u =&gt; `${u.username}#${u.discriminator}`).join(&quot;, &quot;);</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="combining-and-chaining">
@@ -278,7 +278,7 @@ if (!modRole) return &quot;No role found&quot;;</code></pre>
     </h2>
 </doc-anchor-target>
 <p>In a lot of cases you can definitely chain methods together for really clean code. For instance, this is a comma-delimited list of all the small guilds in a bot:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const smallGuilds = client.guilds.cache.filter(g =&gt; g.memberCount &lt; 10).map(g =&gt; g.name).join(&quot;\n&quot;);</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="more-data">

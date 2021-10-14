@@ -25,11 +25,11 @@
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="/.gitbook/assets/favicon.ico" rel="icon" />
-    <link href="/resources/css/retype.css?v=1.10.687523090448" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.10.687525982361" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687523090448" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.10.687525982361" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.10" defer data-turbo-track="reload"></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687523090448" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.10.687525982361" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -229,7 +229,7 @@
 <li>The prefix</li>
 </ul>
 <p>Simply take the following example, and create a new file in the same folder as your bot&#x27;s file, calling it <code v-pre>config.json</code>:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">{
   &quot;token&quot;: &quot;insert-bot-token-here&quot;,
   &quot;prefix&quot;: &quot;!&quot;
@@ -242,7 +242,7 @@
     </h2>
 </doc-anchor-target>
 <p>At the top of your bot file, you need to add a line that will load this configuration, and put it in a variable. This is what it looks like:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const { Client,  Intents } = require(&quot;discord.js&quot;);
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
@@ -257,15 +257,15 @@ const config = require(&quot;./config.json&quot;);</code></pre>
     </h2>
 </doc-anchor-target>
 <p>So let&#x27;s use what we did earlier, and use the token from the config file, instead of putting it directly in the file. The last line of our bot looks like this:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.login(&quot;SuperSecretBotTokenHere&quot;);</code></pre>
 </doc-codeblock></div>
 <p>And we simply need to change it to this:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.login(config.token);</code></pre>
 </doc-codeblock></div>
 <p>The other thing we have, is of course the prefix. Again from before, we have this line in our message handler:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">const prefix = &quot;!&quot;;
 client.on(&quot;messageCreate&quot;, (message) =&gt; {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -280,7 +280,7 @@ client.on(&quot;messageCreate&quot;, (message) =&gt; {
 });</code></pre>
 </doc-codeblock></div>
 <p>We&#x27;re using <code v-pre>prefix</code> in a few places, so we need to change them all. Here&#x27;s how it looks like after the changes:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">client.on(&quot;messageCreate&quot;, (message) =&gt; {
   if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
@@ -324,7 +324,7 @@ client.on(&quot;messageCreate&quot;, (message) =&gt; {
     </h2>
 </doc-anchor-target>
 <p>So is there anything else you could put in that config file? Absolutely. One thing I use it for is to store my personal user ID, so that my bot can use it to recognize me and give me exclusive access to some commands.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">{
   &quot;token&quot;: &quot;insert-bot-token-here&quot;,
   &quot;prefix&quot;: &quot;!&quot;,
@@ -332,7 +332,7 @@ client.on(&quot;messageCreate&quot;, (message) =&gt; {
 }</code></pre>
 </doc-codeblock></div>
 <p>Then, in a protected command (<a href="../../examples/making-an-eval-command/">eval</a> for example), I could use the following line to prevent access to all the users that think they can use it!:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-wrapper"><doc-codeblock line-numbers>
 <pre class="language-javascript"><code v-pre class="language-javascript">if (message.author.id !== config.ownerID) return;</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="whats-next-now">
